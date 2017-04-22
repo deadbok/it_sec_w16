@@ -15,8 +15,7 @@
 
 **Humans are good at looking at graphs**
 
-If stuff is looking bad in the monitoring software and go on to the log-files.
-
+If stuff is looking bad in the monitoring software then go on to the log-files.
 
 # Assignment #
 
@@ -32,13 +31,14 @@ Tasks:
 
 # Syslog protocol #
 
-Either UDP or TCP.
-
-Syslog can use TLS.
+ * Either UDP or TCP.
+ * Syslog can use TLS.
 
 # Assignment II #
 
-I have created an (no variables, very simple, but its gonna be yuge) ansible
+**This is an example install only therefore no hardening has been done**
+
+I have created (no variables, very simple, but its gonna be yuge!) an ansible
 playbook to install an ELKS stack on the Debian VM.
 I have turned the Elasticsearch and Logstash memory usage down, to save some
 memory in the VM.

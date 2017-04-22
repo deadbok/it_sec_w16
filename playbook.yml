@@ -1,4 +1,9 @@
 - hosts: all
+  vars:
+      elastic_ip: 127.0.0.1
+      debian_int_ip: 192.168.10.2
+      debian_ext_ip: 10.7.0.128
+      srx_ip: 192.168.10.1
   tasks:
 
   - name: Update all packages to the latest version
@@ -63,29 +68,103 @@
       state: latest
     become: true
 
+  - name: Install Logstash
+    apt:
+      name: logstash
+      state: latest
+    become: true
+
   - name: Install Kibana
     apt:
       name: kibana
       state: latest
     become: true
 
-  - name: Enable the Elesticsearch service
+  - name: Install new rsyslog.conf
+    template:
+      src: ./rsyslog.conf.j2
+      dest: /etc/rsyslog.conf
+    become: true
+
+  - name: Install new Elasticsearch JVM options configuration file
+    template:
+      src: ./elasticsearch.jvm.options.j2
+      dest: /etc/elasticsearch/jvm.options
+    become: true
+
+  - name: Install new Elasticsearch configuration file
+    template:
+      src: ./elasticsearch.yml.j2
+      dest: /etc/elasticsearch/elasticsearch.yml
+    become: true
+
+  - name: Install new Filebeat configuration file
+    template:
+      src: ./filebeat.yml.j2
+      dest: /etc/filebeat/filebeat.yml
+    become: true
+
+  - name: Install new Logstash JVM options configuration file
+    template:
+      src: ./logstash.jvm.options.j2
+      dest: /etc/logstash/jvm.options
+    become: true
+
+  - name: Install new Logstash configuration file
+    template:
+      src: ./logstash.yml.j2
+      dest: /etc/logstash/logstash.yml
+    become: true
+
+  - name: Install rsyslog pipeline configuration file
+    template:
+      src: ./rsyslog-pipeline.conf.j2
+      dest: /etc/logstash/conf.d/rsyslog-pipeline.conf
+    become: true
+
+  - name: Install new rsyslog template file
+    template:
+      src: ./01-json-template.conf.j2
+      dest: /etc/rsyslog.d/01-json-template.conf
+    become: true
+
+  - name: Install new rsyslog output configuration file
+    template:
+      src: ./60-output.conf.j2
+      dest: /etc/rsyslog.d/60-output.conf
+    become: true
+
+  - name: Install new Kibana configuration file
+    template:
+      src: ./kibana.yml.j2
+      dest: /etc/kibana/kibana.yml
+    become: true
+
+  - name: Enable the Elasticsearch service
     systemd:
       name: elasticsearch
       enabled: yes
       daemon_reload: yes
-    become: true
-
-  - name: Enable the Kibana service
-    systemd:
-      name: kibana
-      enabled: yes
-      daemon_reload: yes
+      state: restarted
     become: true
 
   - name: Enable the Filebeat service
     systemd:
       name: filebeat
       enabled: yes
-      daemon_reload: yes
+      state: restarted
+    become: true
+
+  - name: Enable the Logstash service
+    systemd:
+      name: logstash
+      enabled: yes
+      state: restarted
+    become: true
+
+  - name: Enable the Kibana service
+    systemd:
+      name: kibana
+      enabled: yes
+      state: restarted
     become: true

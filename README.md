@@ -1,12 +1,12 @@
-# ITDEV Week 16 #
+# ITDEV Week 16
 
-# Monitoring #
+# Monitoring
 
  * Keep track of s system.
  * Know what is going on.
  * Everything is running.
 
-## Software ##
+## Software
 
  * Nagios (status right now).
  * Zabbix (time series).
@@ -17,7 +17,7 @@
 
 If stuff is looking bad in the monitoring software then go on to the log-files.
 
-# Assignment #
+# Assignment
 
 Get an SRX router to send logs to a Debian system.
 
@@ -29,12 +29,12 @@ Tasks:
  * Configure the SRX to send the log-files. (root password: a123456)
  * Configure Debian to receive the logs. (root password: test)
 
-# Syslog protocol #
+# Syslog protocol
 
  * Either UDP or TCP.
  * Syslog can use TLS.
 
-# Assignment II (Install an ELKS stack)#
+# Assignment II (Install an ELKS stack)
 
 **This is an example install only therefore no hardening has been done.** *Kibana listens on all addresses.*
 
@@ -43,7 +43,7 @@ I have turned the Elasticsearch and Logstash memory usage down, to save some mem
 
 ![Kibana running on the Debain VM](kibana.png)
 
-# Resources #
+# Resources
 
  * [https://www.oreilly.com/learning/a-guide-to-elasticsearch-5-and-the-elkelastic-stack](https://www.oreilly.com/learning/a-guide-to-elasticsearch-5-and-the-elkelastic-stack)
  * [https://www.digitalocean.com/community/tutorials/how-to-centralize-loags-with-rsyslog-logstash-and-elasticsearch-on-ubuntu-14-04](https://www.digitalocean.com/community/tutorials/how-to-centralize-loags-with-rsyslog-logstash-and-elasticsearch-on-ubuntu-14-04)

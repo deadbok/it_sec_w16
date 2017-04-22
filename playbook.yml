@@ -140,7 +140,7 @@
       dest: /etc/kibana/kibana.yml
     become: true
 
-  - name: Enable the Elasticsearch service
+  - name: Enable and restart the Elasticsearch service
     systemd:
       name: elasticsearch
       enabled: yes
@@ -148,23 +148,30 @@
       state: restarted
     become: true
 
-  - name: Enable the Filebeat service
+  - name: Enable and restart the Filebeat service
     systemd:
       name: filebeat
       enabled: yes
       state: restarted
     become: true
 
-  - name: Enable the Logstash service
+  - name: Enable and restart the Logstash service
     systemd:
       name: logstash
       enabled: yes
       state: restarted
     become: true
 
-  - name: Enable the Kibana service
+  - name: Enable and restart the Kibana service
     systemd:
       name: kibana
+      enabled: yes
+      state: restarted
+    become: true
+
+  - name: Restart the rsyslog service
+    systemd:
+      name: rsyslog
       enabled: yes
       state: restarted
     become: true

@@ -1,0 +1,91 @@
+- hosts: all
+  tasks:
+
+  - name: Update all packages to the latest version
+    apt:
+      update_cache: yes
+      upgrade: dist
+    become: true
+
+  - name: Install APT HTTPS transport.
+    apt:
+      name: apt-transport-https
+      state: present
+    become: true
+
+  - name: Install the repository signing key for elastic.co
+    apt_key:
+      url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+      state: present
+    become: true
+
+  - name: Enable the Elasticsearch repository
+    apt_repository:
+      repo: deb https://artifacts.elastic.co/packages/5.x/apt stable main
+      state: present
+    become: true
+
+  - name: Enable the Jessia backports repository
+    apt_repository:
+      repo: deb http://http.debian.net/debian jessie-backports main
+      state: present
+    become: true
+
+  - name: Update all packages to the latest version
+    apt:
+      update_cache: yes
+      upgrade: dist
+    become: true
+
+  - name: Install OpenJDK JRE headless
+    apt:
+      default_release: jessie-backports
+      name: openjdk-8-jre-headless
+      state: latest
+    become: true
+
+  - name: Install OpenJDK JRE
+    apt:
+      default_release: jessie-backports
+      name: openjdk-8-jre
+      state: latest
+    become: true
+
+  - name: Install Elasticsearch
+    apt:
+      name: elasticsearch
+      state: latest
+    become: true
+
+  - name: Install Filebeat
+    apt:
+      name: filebeat
+      state: latest
+    become: true
+
+  - name: Install Kibana
+    apt:
+      name: kibana
+      state: latest
+    become: true
+
+  - name: Enable the Elesticsearch service
+    systemd:
+      name: elasticsearch
+      enabled: yes
+      daemon_reload: yes
+    become: true
+
+  - name: Enable the Kibana service
+    systemd:
+      name: kibana
+      enabled: yes
+      daemon_reload: yes
+    become: true
+
+  - name: Enable the Filebeat service
+    systemd:
+      name: filebeat
+      enabled: yes
+      daemon_reload: yes
+    become: true
